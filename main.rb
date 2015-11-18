@@ -6,7 +6,8 @@ class SimWindow < Gosu::Window
 	G = 6.67408e-11	
 
 	def initialize sim
-		super 640, 640
+		@window_size = 640
+		super @window_size, @window_size
 		self.caption = "Planet Simulation"
 	
 		@data = File.read("#{sim}")
@@ -16,7 +17,7 @@ class SimWindow < Gosu::Window
 		@background_image = Gosu::Image.new("images/space.jpg")
 		
 		@planets = []
-		@planets_data.each { |planet| @planets.push(Planet.new(planet, @lines[1], 640)) }
+		@planets_data.each { |planet| @planets.push(Planet.new(planet, @lines[1].to_f*2, @window_size)) }
 	end
 
 	def update

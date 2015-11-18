@@ -3,23 +3,29 @@ require_relative "planet"
 
 class SimWindow < Gosu::Window
 
-	G = 6.67408e-11
+	G = 6.67408e-11	
 
-	def initialize
+	def initialize sim
 		super 640, 640
 		self.caption = "Planet Simulation"
+	
+		@data = File.read("#{sim}")
+		@lines = @data.split("\n")
+		@planets_data = @lines[2..6].map {|planet| planet.split(" ") }
 		
 		@background_image = Gosu::Image.new("images/space.jpg")
-		# @planets = []
+		
+		@planets = []
+		@planets_data.each { |planet| @planets.push(Planet.new(planet, @lines[1], 640)) }
 	end
 
 	def update
-		# @planets.push(Planet.new)
+
 	end
 
 	def draw
 		@background_image.draw(0,0,0)
-		# @planets.each { |planet| planet.draw }
+		@planets.each { |planet| planet.draw }
 	end
 
 	def button_down id
@@ -28,7 +34,5 @@ class SimWindow < Gosu::Window
 
 end
 
-# $data = File.read("planets.txt")
-# $
-window = SimWindow.new
+window = SimWindow.new("simulations/planets.txt")
 window.show

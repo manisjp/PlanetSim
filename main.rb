@@ -3,8 +3,6 @@ require_relative "planet"
 
 class SimWindow < Gosu::Window
 
-	G = 6.67408e-11	
-
 	def initialize sim
 		@window_size = 640
 		super @window_size, @window_size
@@ -12,7 +10,7 @@ class SimWindow < Gosu::Window
 	
 		@data = File.read("#{sim}")
 		@lines = @data.split("\n")
-		@planets_data = @lines[2..6].map {|planet| planet.split(" ") }
+		@planets_data = @lines[2..(@lines[0].to_i + 1)].map {|planet| planet.split(" ") }
 		
 		@background_image = Gosu::Image.new("images/space.jpg")
 		
@@ -21,7 +19,8 @@ class SimWindow < Gosu::Window
 	end
 
 	def update
-
+		@planets.each { |planet| planet.totalf(@planets.each)}
+		@planets.each 
 	end
 
 	def draw

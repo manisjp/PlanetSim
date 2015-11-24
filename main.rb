@@ -16,7 +16,6 @@ class SimWindow < Gosu::Window
 		
 		@planets = []
 		@planets_data.each { |planet| @planets.push(Planet.new(planet, @lines[1].to_f*2, @window_size)) }
-		@planets.each { |planet| planet.warp(width/2.0, height/2.0) }
 	end
 
 	def update

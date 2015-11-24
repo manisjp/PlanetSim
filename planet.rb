@@ -3,6 +3,8 @@ require "gosu"
 class Planet
 
 	G = 6.67408e-11
+
+	attr_accessor :xpos, :ypos, :xvel, :yvel, :mass
 	
 	def initialize data, system_size, window_size
 		@xpos = data[0].to_f/system_size*window_size + window_size/2
@@ -11,16 +13,30 @@ class Planet
 		@yvel = data[3].to_f
 		@mass = data[4].to_f
 		@image = Gosu::Image.new("images/#{data[5]}")
-		@totalf = 0
+		@xforces = 0
 	end
 
 	def draw 
 		@image.draw(@xpos,@ypos,1)
 	end
 
-	def totalf planet2
-		@r = Math.sqrt((planet2[0] - @xpos)**2 + (planet2[1] - @ypos)**2 )
-		@totalf += G*@mass*planet2[4]/r**2
+	def move planets
+		planets.each do |planet|
+			@dx = planet.xpos - @xpos
+			@dy = planet.ypos - @ypos
+			@r = Math.sqrt(dx**2 + dy**2)
+			if @r == 0
+				return
+			else
+				@totalf += G*@mass*planet.mass/@r**2
+			end
+			@xtotalf = @totalf*dx/@r
+			@ytotalf = @totalf*dy/@r
+			@xaccel = @xtotalf/@mass
+			@yaccel = @ytotalf/@mass
+		end
 	end
+
+
 
 end

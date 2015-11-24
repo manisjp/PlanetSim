@@ -19,8 +19,7 @@ class SimWindow < Gosu::Window
 	end
 
 	def update
-		@planets.each { |planet| planet.totalf(@planets.each)}
-		@planets.each 
+		@planets.each { |planet| planet.move(@planets) }
 	end
 
 	def draw
